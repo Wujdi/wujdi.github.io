@@ -23,6 +23,6 @@ A fully responsive restaurant ordering web application built with vanilla HTML, 
 - Google Maps API
 - WhatsApp Business API
 
-1. Clone the repository
+
    ```bash
    git clone https://github.com/yourusername/Restaurant_Vanilla_HTML.git
