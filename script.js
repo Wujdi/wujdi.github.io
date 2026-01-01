@@ -254,7 +254,7 @@ function placeOrder(event) {
   const message = `Order from ${name}:\n\n${orderSummary}\n\nTotal: $${total}\n\nDelivery to: ${address}\nPhone: ${phone}${notes ? `\nNotes: ${notes}` : ''}`;
 
   // Open WhatsApp with pre-filled message
-  const whatsappNumber = '+234123456789'; // Replace with your number
+  const whatsappNumber = '+2349026655774'; // Replace with your number
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, '_blank');
 
@@ -284,7 +284,7 @@ function getDirections() {
 
 // ============ WHATSAPP CONTACT ============
 function openWhatsApp() {
-  const whatsappNumber = '+234123456789'; // Replace with your WhatsApp number
+  const whatsappNumber = '+2349026655774'; // Replace with your WhatsApp number
   const message = 'Hi! I would like to know more about your restaurant and menu options.';
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, '_blank');
@@ -337,3 +337,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
