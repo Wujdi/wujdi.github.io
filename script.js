@@ -1,4 +1,4 @@
-// ============ MENU DATA ============
+
 const menuItems = [
   // Pizza
   { id: 1, name: 'Margherita Pizza', price: '$12.99', emoji: '🍕', category: 'pizza', description: 'Fresh mozzarella and basil' },
@@ -6,30 +6,25 @@ const menuItems = [
   { id: 3, name: 'Vegetarian Pizza', price: '$13.99', emoji: '🍕', category: 'pizza', description: 'Fresh vegetables' },
   { id: 4, name: 'Meat Lovers Pizza', price: '$16.99', emoji: '🍕', category: 'pizza', description: 'Bacon, sausage, ham' },
   
-  // Burgers
   { id: 5, name: 'Classic Burger', price: '$9.99', emoji: '🍔', category: 'burgers', description: 'Cheese and lettuce' },
   { id: 6, name: 'Bacon Burger', price: '$11.99', emoji: '🍔', category: 'burgers', description: 'Crispy bacon included' },
   { id: 7, name: 'Double Patty Burger', price: '$12.99', emoji: '🍔', category: 'burgers', description: 'Two beef patties' },
   { id: 8, name: 'Mushroom Swiss', price: '$10.99', emoji: '🍔', category: 'burgers', description: 'Sautéed mushrooms & swiss' },
-  
-  // Drinks
+    
   { id: 9, name: 'Coca Cola', price: '$2.99', emoji: '🥤', category: 'drinks', description: 'Cold refreshment' },
   { id: 10, name: 'Fruit Juice', price: '$3.99', emoji: '🧃', category: 'drinks', description: 'Fresh fruit juice' },
   { id: 11, name: 'Iced Tea', price: '$2.49', emoji: '🍹', category: 'drinks', description: 'Refreshing iced tea' },
   { id: 12, name: 'Milkshake', price: '$4.99', emoji: '🥛', category: 'drinks', description: 'Creamy milkshake' },
-  
-  // Desserts
+    
   { id: 13, name: 'Chocolate Cake', price: '$5.99', emoji: '🍰', category: 'desserts', description: 'Rich chocolate cake' },
   { id: 14, name: 'Cheesecake', price: '$6.99', emoji: '🍰', category: 'desserts', description: 'New York style' },
   { id: 15, name: 'Ice Cream', price: '$3.99', emoji: '🍦', category: 'desserts', description: 'Multiple flavors' },
   { id: 16, name: 'Brownie', price: '$4.49', emoji: '🍫', category: 'desserts', description: 'Fudgy brownie' }
 ];
 
-// ============ STATE MANAGEMENT ============
 let cart = [];
 let currentFilter = 'all';
 
-// ============ INITIALIZATION ============
 document.addEventListener('DOMContentLoaded', function() {
   renderMenu();
   setupEventListeners();
@@ -37,9 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
   updateCartDisplay();
 });
 
-// ============ EVENT LISTENERS ============
 function setupEventListeners() {
-  // Menu toggle
   const menuToggle = document.getElementById('menuToggle');
   const navMenu = document.getElementById('navMenu');
   
@@ -49,7 +42,6 @@ function setupEventListeners() {
     });
   }
 
-  // Close menu when clicking nav link
   const navLinks = document.querySelectorAll('.nav-link');
   navLinks.forEach(link => {
     link.addEventListener('click', function() {
@@ -58,7 +50,6 @@ function setupEventListeners() {
   });
 }
 
-// ============ MENU RENDERING ============
 function renderMenu() {
   const menuGrid = document.getElementById('menuGrid');
   menuGrid.innerHTML = '';
@@ -86,7 +77,6 @@ function renderMenu() {
 function filterMenu(category) {
   currentFilter = category;
   
-  // Update active button
   document.querySelectorAll('.category-btn').forEach(btn => {
     btn.classList.remove('active');
   });
@@ -95,7 +85,6 @@ function filterMenu(category) {
   renderMenu();
 }
 
-// ============ CART MANAGEMENT ============
 function addToCart(itemId) {
   const item = menuItems.find(i => i.id === itemId);
   if (!item) return;
@@ -138,7 +127,6 @@ function updateCartDisplay() {
   const cartContainer = document.getElementById('cartContainer');
   const cartCount = document.getElementById('cartCount');
   
-  // Update cart count
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   cartCount.textContent = `(${totalItems})`;
 
@@ -146,7 +134,7 @@ function updateCartDisplay() {
     cartContainer.innerHTML = '<p class="empty-cart">Your cart is empty. Add items from the menu!</p>';
     return;
   }
-
+    //Rendering Cart items
   let cartHTML = '<div class="cart-items">';
   
   cart.forEach(item => {
@@ -172,7 +160,6 @@ function updateCartDisplay() {
 
   cartHTML += '</div>';
 
-  // Add summary
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const tax = subtotal * 0.1;
   const total = subtotal + tax;
@@ -245,20 +232,16 @@ function placeOrder(event) {
   const address = document.getElementById('address').value;
   const notes = document.getElementById('notes').value;
 
-  // Prepare order summary
   const orderSummary = cart.map(item => `${item.quantity}x ${item.name}`).join('\n');
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const total = (subtotal * 1.1).toFixed(2);
 
-  // Create message for WhatsApp
   const message = `Order from ${name}:\n\n${orderSummary}\n\nTotal: $${total}\n\nDelivery to: ${address}\nPhone: ${phone}${notes ? `\nNotes: ${notes}` : ''}`;
 
-  // Open WhatsApp with pre-filled message
-  const whatsappNumber = '+2349026655774'; // Replace with your number
+  const whatsappNumber = '+2349026655774';
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, '_blank');
 
-  // Clear cart after order
   cart = [];
   saveCartToLocalStorage();
   updateCartDisplay();
@@ -266,7 +249,6 @@ function placeOrder(event) {
   showToast('Order sent successfully! Check WhatsApp for confirmation.');
 }
 
-// ============ GOOGLE MAPS FUNCTIONS ============
 function openGoogleMaps() {
   const restaurantLat = 12.1510710;
   const restaurantLng = 9.1530530;
@@ -282,15 +264,13 @@ function getDirections() {
   window.open(directionsUrl, '_blank');
 }
 
-// ============ WHATSAPP CONTACT ============
 function openWhatsApp() {
-  const whatsappNumber = '+2349026655774'; // Replace with your WhatsApp number
+  const whatsappNumber = '+2349026655774';
   const message = 'Hi! I would like to know more about your restaurant and menu options.';
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, '_blank');
 }
 
-// ============ UTILITY FUNCTIONS ============
 function showToast(message) {
   const toast = document.getElementById('toast');
   toast.textContent = message;
@@ -308,7 +288,6 @@ function scrollToSection(sectionId) {
   }
 }
 
-// ============ LOCAL STORAGE ============
 function saveCartToLocalStorage() {
   localStorage.setItem('restaurantCart', JSON.stringify(cart));
 }
@@ -325,7 +304,6 @@ function loadCartFromLocalStorage() {
   }
 }
 
-// ============ SMOOTH SCROLL ============
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
@@ -337,4 +315,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
-
